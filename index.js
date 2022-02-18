@@ -34,4 +34,7 @@ const server = http.createServer((req,res)=>{
     if(req.url === '/login'){
         sendFile('login.html', 'text/html', res);
     }
+    if(req.url === '/profile'){
+        sendFile('profile.html', 'text/html', res);
+    }
 }).listen(8080);
