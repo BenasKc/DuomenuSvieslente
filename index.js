@@ -23,6 +23,15 @@ const server = http.createServer((req,res)=>{
         sendFile('app.js', 'text/javascript', res);
     }
     if(req.url === "/"){
+        res.writeHead(302, {
+            'Location':'/login'
+        });
+        res.end();
+    }
+    if(req.url === '/index'){
         sendFile('index.html', 'text/html', res);
+    }
+    if(req.url === '/login'){
+        sendFile('login.html', 'text/html', res);
     }
 }).listen(8080);
