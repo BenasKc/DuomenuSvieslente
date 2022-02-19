@@ -13,7 +13,7 @@ const app = Vue.createApp({
                 alert("Login successful");
                 const d = new Date();
                 d.setTime(d.getTime() + (15*60*1000));
-                let expires = "expires="+ d.toUTCString();
+                let expires = d.toUTCString();
                 document.location.reload(true);
                 document.cookie = `login=true; expires=${expires};`;
             }
