@@ -22,6 +22,9 @@ const server = http.createServer((req,res)=>{
     if(req.url === "/app.js"){
         sendFile('app.js', 'text/javascript', res);
     }
+    if(req.url === "/login.js"){
+        sendFile('login.js', 'text/javascript', res);
+    }
     if(req.url === "/"){
         res.writeHead(302, {
             'Location':'/login'
