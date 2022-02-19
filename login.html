@@ -6,27 +6,18 @@
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>   
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
     </head>
-    <body id='login'>
-        <nav class="navbar navbar-default">
-            <div class=".container-fluid">
-                <a class="navbar-brand" href="/index">Duomen&#371 &#353vieslent&#279</a>
-            </div>
-            <ul class="nav navbar-nav">
-                <li class='active'><a href='/login'>Login</a></li>
-                <li ><a href='/index'>Data</a></li>
-
-                <li ><a href='/profile'>Profile</a></li>
-            </ul>
-        </nav>
-        <div class="form-group">
+    <body id='login' style="justify-content: center; align-items: center;display: flex;">
+        <div class="containter-fluid" style="margin:1vw;">
+            <div class="form-group">
             <label for="usr">Prisijungimo vardas:</label>
             <input type="text" class="form-control" id="usr" v-model="username">
-        </div>
-        <div class="form-group">
+            </div>
+           <div class="form-group">
             <label for="pwd">Slaptaodis:</label>
             <input type="password" class="form-control" id="pwd" v-model="password">
-        </div>
-        <button type="button" class="btn btn-default" id="loginreq" v-on:click="pass">Prisijungti</button>
+           </div>
+          <button type="button" class="btn btn-default" id="loginreq" v-on:click="pass">Prisijungti</button>
+        </div> 
         <script src="https://unpkg.com/vue@3"></script>
         <script src="login.js"></script>
     </body>
