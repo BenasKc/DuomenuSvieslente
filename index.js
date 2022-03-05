@@ -1,5 +1,6 @@
 const http = require("http");
 const fs = require("fs");
+const { url } = require("inspector");
 
 function sendFile(filename, contentType, res, callback){
     fs.readFile(filename, (err,data) => {
@@ -21,6 +22,13 @@ function sendFile(filename, contentType, res, callback){
 const server = http.createServer((req,res)=>{
     var items = req.rawHeaders;
     var login = false;
+    if(req.url === '/logoff'){
+        document.cookie = `login=false;`;
+        res.writeHead(302, {
+            'Location':'/login'
+        });
+        res.end();
+    }
     for(i = 0;i < items.length;i++){
         if(items[i]=='Cookie'){
             var stuff = items[i+1].replace(/\s/g, '');

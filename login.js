@@ -8,7 +8,7 @@ const app = Vue.createApp({
     },
     methods:{
         pass:function(event){
-            if(this.username === 'BenasKc' && this.password==="Benas123")
+            if((this.username === 'BenasKc' && this.password==="Benas123")||(this.username === 'silumini' && this.password === "Arnas123"))
             {
                 alert("Login successful");
                 const d = new Date();
@@ -16,14 +16,6 @@ const app = Vue.createApp({
                 let expires = d.toUTCString();
                 document.location.reload(true);
                 document.cookie = `login=true; expires=${expires};`;
-            }
-            else if(this.username === 'silumini' && this.password === "Arnas123"){
-                alert("Login successful");
-                const d = new Date();
-                d.setTime(d.getTime() + (15*60*1000));
-                let expires = "expires="+ d.toUTCString();
-                document.location.reload(true);
-                document.cookie = `login=true;expires=${expires};`;
             }
             else{
                 alert("Login failed!");
