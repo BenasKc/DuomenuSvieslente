@@ -7,7 +7,7 @@ document.addEventListener('DOMContentLoaded', function(){
             text:'Darbuotojų efektyvumas'
         },
         xAxis:{
-            categories:['Užuodtys', 'Susitikimai', 'Pardavimai']
+            categories:['Užduotys', 'Susitikimai', 'Pardavimai']
         },
         yAxis:{
             title:{
