@@ -25,13 +25,13 @@ const server = http.createServer((req,res)=>{
         if(items[i]=='Cookie'){
             var stuff = items[i+1].replace(/\s/g, '');
             const values = stuff.split(';');
-            login = values.every(element => {
-                var x = element.split('=');
+            for(var i = 0;i < values.length;i++){
+                var x = values[i].split('=');
                 if(x[0] === 'login'){
-                    if(x[1] === 'true')return true;
+                    if(x[1] === 'true')login = true;
+                    break;
                 }
-
-            });
+            }
             break;
         }
     }
