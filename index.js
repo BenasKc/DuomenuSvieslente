@@ -23,8 +23,15 @@ const server = http.createServer((req,res)=>{
     var login = false;
     for(i = 0;i < items.length;i++){
         if(items[i]=='Cookie'){
-            if(items[i+1] === 'login=true')login=true;
-            else login = false;
+            var stuff = items[i+1].replace(/\s/g, '');
+            const values = stuff.split(';');
+            login = values.every(element => {
+                var x = element.split('=');
+                if(x[0] === 'login'){
+                    if(x[1] === 'true')return true;
+                }
+
+            });
             break;
         }
     }
