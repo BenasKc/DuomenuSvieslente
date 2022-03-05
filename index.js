@@ -50,23 +50,22 @@ const server = http.createServer((req,res)=>{
             });
             res.end();
         }
-        if(req.url === "/app.js"){
+        else if(req.url === "/app.js"){
             sendFile('app.js', 'text/javascript', res);
         }
-        if(req.url === "/"){
+        else if(req.url === "/"){
             res.writeHead(302, {
                 'Location':'/index'
             });
             res.end();
         }
-        if(req.url === '/index'){
+        else if(req.url === '/index'){
             sendFile('index.html', 'text/html', res);
         }
-        
-        if(req.url === '/profile'){
+        else if(req.url === '/profile'){
             sendFile('profile.html', 'text/html', res);
         }
-        if(req.url === '/draw.js'){
+        else if(req.url === '/draw.js'){
             sendFile('draw.js', 'text/javascript', res);
         }
     }
