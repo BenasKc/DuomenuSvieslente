@@ -1,6 +1,5 @@
 const http = require("http");
 const fs = require("fs");
-const cookie = require('cookie');
 
 function sendFile(filename, contentType, res, callback){
     fs.readFile(filename, (err,data) => {
