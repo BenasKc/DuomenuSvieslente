@@ -1,7 +1,7 @@
 const http = require("http");
 const fs = require("fs");
 const server_link = "localhost";
-const server_port = 1300;
+var port = process.env.PORT || 80
 
 function check_for_login(x, cb){
     const options = {
