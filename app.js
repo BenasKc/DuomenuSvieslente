@@ -16,6 +16,10 @@ const app = Vue.createApp({
             this.lastName = results[0].name.last
             this.email = results[0].email
             this.picture = results[0].picture.large
+        },
+        logoff : function(){
+            document.cookies = 'login=-1';
+            document.reload;
         }
     },
     created(){

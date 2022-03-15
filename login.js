@@ -1,4 +1,19 @@
+function check_Acc(urla, str, cb){
+      
+    let xhr = new XMLHttpRequest();
 
+    xhr.open("POST", urla, true);
+
+    xhr.setRequestHeader("Content-Type", "application/json");
+
+    xhr.onreadystatechange = function () {
+        if (xhr.readyState === 4 && xhr.status === 200) {
+            cb(this.responseText);
+        }
+    };
+
+    xhr.send(str);
+}
 const app = Vue.createApp({
     data(){
         return{
@@ -8,19 +23,11 @@ const app = Vue.createApp({
     },
     methods:{
         pass:function(event){
-            if((this.username === 'BenasKc' && this.password==="Benas123")||(this.username === 'silumini' && this.password === "Arnas123"))
-            {
-                alert("Login successful");
-                const d = new Date();
-                d.setTime(d.getTime() + (15*60*1000));
-                let expires = d.toUTCString();
+            check_Acc('/checklogin', this.username +'|'+ this.password, (item)=>{
                 document.location.reload(true);
-                document.cookie = `login=true; expires=${expires};`;
-            }
-            else{
-                alert("Login failed!");
-                document.cookie = `login=false;`;
-            }
+                document.cookie = `login=${item};`;
+            })
+            
         }
     }
 })

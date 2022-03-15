@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>  
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>   
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+    </head>
+    <body class='container-fluid' id='login' style="justify-content: center; align-items: center;display: flex;height:100vh;background-color: rgb(221, 220, 220);">
+        
+        <div class="containter-fluid" style="margin:1vw;width:25vh">
+            <div class="form-group">
+            <label for="usr">Prisijungimo vardas:</label>
+            <input type="text" class="form-control" id="usr" v-model="username">
+            </div>
+           <div class="form-group">
+            <label for="pwd">El. pa&#353tas:</label>
+            <input type="text" class="form-control" id="eml" v-model="email">
+           </div>
+           <div class="form-group">
+            <label for="eml">Slapta&#382odis:</label>
+            <input type="password" class="form-control" id="pwd" v-model="password">
+           </div>
+          <button type="button" class="btn btn-default pull-right" id="loginreq" v-on:click="pass">Registruotis</button>
+          <button class="btn btn-dark" onclick="location.href = '/login'">Prisijungti</button>
+        </div> 
+        <script src="https://unpkg.com/vue@3"></script>
+        <script src="register.js"></script>
+    </body>
+</html>
