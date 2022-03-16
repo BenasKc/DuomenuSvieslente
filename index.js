@@ -4,6 +4,7 @@ const server_link = "auth-svieslente-test.herokuapp.com";
 var server_port = 8080
 
 function check_for_login(x, cb){
+    if(x.toString().replace('"', '').replace('"', '').length < 1)cb(false)
     const options = {
         hostname: server_link,
         path: '/check_token',
