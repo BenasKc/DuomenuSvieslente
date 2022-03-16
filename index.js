@@ -1,12 +1,11 @@
 const http = require("http");
 const fs = require("fs");
-const server_link = "localhost";
-var port = process.env.PORT || 80
+const server_link = "auth-svieslente-test.herokuapp.com";
+var server_port = 8080
 
 function check_for_login(x, cb){
     const options = {
         hostname: server_link,
-        port: server_port,
         path: '/check_token',
         method: 'POST',
         headers: {
@@ -50,7 +49,6 @@ function accept(login, req, res){
         req.on('data', chunk => {
             const options = {
                 hostname: server_link,
-                port: server_port,
                 path: '/create',
                 method: 'POST',
                 headers: {
@@ -76,8 +74,8 @@ function accept(login, req, res){
         var item ;
         req.on('data', chunk => {
             const options = {
-                hostname: server_link,
-                port: server_port,
+                hostname: server_link
+                // ,port: server_port, <- like this if port required
                 path: '/checklogin',
                 method: 'POST',
                 headers: {
