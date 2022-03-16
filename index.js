@@ -15,7 +15,7 @@ function check_for_login(x, cb){
         callback = function(response) {
         response.on('data', function (d) {
             var item = (d.toString());
-            if(x == item)cb(true);
+            if(x === item && item != '"-1"')cb(true);
             else cb(false);
             
         });
@@ -117,7 +117,7 @@ function accept(login, req, res){
             res.end();
         }
     }
-    else{
+    else if(login === true){
         if(req.url === "/login"){
             res.writeHead(302, {
                 'Location':'/index'
@@ -172,5 +172,7 @@ const server = http.createServer((req,res)=>{
             break;
         }
     } 
-    if(count == items.length-1)accept(login, req, res);
+    if(count == items.length-1){
+        accept(login, req, res);
+    }
 }).listen(8080);
