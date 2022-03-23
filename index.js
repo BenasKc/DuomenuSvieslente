@@ -1,12 +1,13 @@
 const http = require("http");
 const fs = require("fs");
-const server_link = "auth-svieslente-test.herokuapp.com";
-var server_port = 8080
+const server_link = 'localhost' //"auth-svieslente-test.herokuapp.com";
+var server_port = 8000
 
 function check_for_login(x, cb){
     if(x.toString().replace('"', '').replace('"', '').length < 1)cb(false)
     const options = {
         hostname: server_link,
+        port: server_port, 
         path: '/check_token',
         method: 'POST',
         headers: {
@@ -45,11 +46,24 @@ function sendFile(filename, contentType, res, callback){
     });
 }
 function accept(login, req, res){
-    if(req.url === "/create"){
+    if(req.url == '/vue.js'){
+        sendFile('vue.js', 'text/javascript', res);
+    }
+    else if(req.url == '/bootstrap.min.js'){
+        sendFile('bootstrap.min.js', 'text/javascript', res);
+    }
+    else if(req.url == '/bootstrap.min.css'){
+        sendFile('bootstrap.min.css', 'text/css', res);
+    }
+    else if(req.url === "/highcharts.js"){
+        sendFile('highcharts.js', 'text/html', res);
+    }
+    else if(req.url === "/create"){
         var item ;
         req.on('data', chunk => {
             const options = {
                 hostname: server_link,
+                port: server_port,
                 path: '/create',
                 method: 'POST',
                 headers: {
@@ -76,7 +90,7 @@ function accept(login, req, res){
         req.on('data', chunk => {
             const options = {
                 hostname: server_link,
-                // port: server_port, <- like this if port required
+                 port: server_port, //<- like this if port required
                 path: '/checklogin',
                 method: 'POST',
                 headers: {
