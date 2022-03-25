@@ -19,12 +19,14 @@ const app = Vue.createApp({
         return{
             username: null,
             password: null,
+            name: null,
+            lastname: null,
             email: null
         }
     },
     methods:{
         pass:function(event){
-            create_Acc('/create', this.username + '|' + this.password + '|' + this.email, (item)=>{
+            create_Acc('/create', this.username + '|' + this.password + '|' + this.email + '|' + this.name +'|'+this.lastname, (item)=>{
                 alert(item.replace('"', '').replace('"', ''));
             });
         }
