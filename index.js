@@ -4,7 +4,7 @@ const server_link = 'localhost' //"auth-svieslente-test.herokuapp.com";
 var server_port = 8000
 
 function check_for_login(x, cb){
-    if(x.toString().replace('"', '').replace('"', '').length < 1)cb(false)
+    if(x.toString().slice(1, -1).length < 1)cb(false)
     const options = {
         hostname: server_link,
         port: server_port, 
@@ -24,7 +24,7 @@ function check_for_login(x, cb){
         
     }
     var logreq = http.request(options, callback);
-    logreq.write(x.toString().replace('"', '').replace('"', ''))
+    logreq.write(x.toString().slice(1, -1))
     logreq.end();
 
 }

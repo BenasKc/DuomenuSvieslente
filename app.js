@@ -42,10 +42,6 @@ const app = Vue.createApp({
                 this.email = item[0];
             })
             
-        },
-        logoff : function(){
-            document.cookies = 'login=-1';
-            document.reload;
         }
     },
     created(){

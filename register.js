@@ -26,7 +26,7 @@ const app = Vue.createApp({
     },
     methods:{
         pass:function(event){
-            create_Acc('/create', this.username + '|' + this.password + '|' + this.email + '|' + this.name +'|'+this.lastname, (item)=>{
+            create_Acc('/create', this.username.replace(/[|]/g, "") + '|' + this.password.replace(/[|]/g, "") + '|' + this.email.replace(/[|]/g, "") + '|' + this.name.replace(/[|]/g, "") +'|'+this.lastname.replace(/[|]/g, ""), (item)=>{
                 alert(item.replace('"', '').replace('"', ''));
             });
         }
