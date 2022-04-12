@@ -35,11 +35,11 @@ const app = Vue.createApp({
     methods:{
         fetch_prof: function(event){
             fetch_log('/fetch_profile', getCookieValue(), (item)=>{
-                item = item.replace('"', '').replace('"', '');
-                item = item.split('|');
-                this.firstName = item[1];
-                this.lastName = item[2];
-                this.email = item[0];
+                JSON.parse(item);
+                console.log(item)
+                this.firstName = item.firstName;
+                this.lastName = item.lastName;
+                this.email = item.email;
             })
             
         }
