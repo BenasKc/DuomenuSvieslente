@@ -1,5 +1,5 @@
 var item2 = {
-    title:'Atliktos užduotyss',
+    title:'Atliktos užduotyas',
     categories_x:['Užduotys'],
     categories_y:'Darbų atlikta',    
     series: [{
@@ -13,28 +13,41 @@ var item2 = {
         ]
     }]
 }
-function send_Data(urla, obj, cb){
-      
-    let xhr = new XMLHttpRequest();
-
+function acquire_id(obj, cb){
     var itm = document.cookie.split(';');
+    var count=0;
     for(var i = 0;i < itm.length;i++){
         var tmp = itm[i].split('=');
+        tmp[0] = tmp[0].replace(/\s/g, '')
         if(tmp[0] === 'login'){
             obj.id = tmp[1].slice(1,-1);
-        }
+            cb(obj)
+        } else count++;
+        if(count === tmp.length)cb(false)
+        
     }
-    xhr.open("POST", urla, true);
-
-    xhr.setRequestHeader("Content-Type", "application/json");
-
-    xhr.onreadystatechange = function () {
-        if (xhr.readyState === 4 && xhr.status === 200) {
-            cb(this.responseText);
+}
+function send_Data(urla, obj, cb){
+    
+    acquire_id(obj, (object)=>{
+        if(object === false){
+            return;
         }
-    };
-
-    xhr.send(JSON.stringify(obj));
+        let xhr = new XMLHttpRequest();
+    
+        xhr.open("POST", urla, true);
+    
+        xhr.setRequestHeader("Content-Type", "application/json");
+    
+        xhr.onreadystatechange = function () {
+            if (xhr.readyState === 4 && xhr.status === 200) {
+                cb(this.responseText);
+            }
+        };
+    
+        xhr.send(JSON.stringify(object));
+    })
+    
 }
 const prog = Vue.createApp({
     data(){
