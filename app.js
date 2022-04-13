@@ -11,17 +11,20 @@ function fetch_log(urla, str, cb){
             cb(this.responseText);
         }
     };
-
+    console.log(str)
     xhr.send(str);
 }
-function getCookieValue(){  
+function getCookieValue(cb){  
     var item = document.cookie;
     item = item.split(';');
+    var count = 0;
     for(var i = 0;i < item.length;i++){
         var temp = item[i].split('=');
-        if(temp[0]==='login')return temp[1];
+        temp[0] = temp[0].replace(/\s/g, '');
+        if(temp[0]==='login')cb( temp[1]);
+        else count++;
+        if(count === item.length)cb(  -1);
     }
-    return '-1';
 }
 const app = Vue.createApp({
     data(){
@@ -34,12 +37,15 @@ const app = Vue.createApp({
     },
     methods:{
         fetch_prof: function(event){
-            fetch_log('/fetch_profile', getCookieValue(), (item)=>{
-                item = JSON.parse(item)
-                this.firstName = item.firstName;
-                this.lastName = item.lastName;
-                this.email = item.email;
+            getCookieValue((value)=>{
+                fetch_log('/fetch_profile',  value, (item)=>{
+                    item = JSON.parse(item)
+                    this.firstName = item.firstName;
+                    this.lastName = item.lastName;
+                    this.email = item.email;
+                })
             })
+            
             
         }
     },
