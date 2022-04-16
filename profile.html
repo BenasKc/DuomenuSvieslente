@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+        <script src="jquery.min.js"></script>  
+        <script src="bootstrap.min.js"></script>   
+        <link rel="stylesheet" href="bootstrap.min.css">
+        <title>Profilis</title>
+    </head>
+    <body id='app'>
+        <nav class="navbar navbar-default">
+            <div class=".container-fluid">
+                <a class="navbar-brand" href="/index">Duomen&#371 &#353vieslent&#279</a>
+            </div>
+            <ul class="nav navbar-nav">
+                <li ><a href='/chart_new'>New chart</a></li>
+                <li ><a href='/index'>Data</a></li>
+                <li class='active'><a href='/profile'>Profile</a></li>
+                <li style='display: inline;position: absolute;right: 0;'><a href='/login' id="logoff" onclick="logoff()" >Log off</a></li>
+            </ul>
+        </nav>
+        <div class="container" style="text-align: center;padding:2rem;border:2px solid black">
+            <img v-bind:src="picture">
+            <h1>{{firstName}} {{lastName}}</h1>
+            <h2>Email: {{email}}</h2>
+        </div>
+        <script>
+            function  logoff() {
+                document.cookie = "login=-1; expires=Thu, 18 Dec 2013 12:00:00 UTC; Max-Age=0";
+                document.location.reload;
+            };
+        </script>
+        <script src="vue.js"></script>
+        <script src="app.js"></script>
+    </body>
+</html>

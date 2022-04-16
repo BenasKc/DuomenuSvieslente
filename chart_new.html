@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+        <meta http-equiv="Content-type" content="text/html; charset=UTF-8"/>
+
+        <script src="jquery.min.js"></script>  
+        <script src="bootstrap.min.js"></script>   
+        <link rel="stylesheet" href="bootstrap.min.css">
+        <title>Profilis</title>
+    </head>
+    <body id='chrbod'>
+        <nav class="navbar navbar-default">
+            <div class=".container-fluid">
+                <a class="navbar-brand" href="/index">Duomen&#371 &#353vieslent&#279</a>
+            </div>
+            <ul class="nav navbar-nav">
+                <li class='active'><a href='/chart_new'>New chart</a></li>
+                <li ><a href='/index'>Data</a></li>
+                <li ><a href='/profile'>Profile</a></li>
+                <li style='display: inline;position: absolute;right: 0;'><a href='/login' id="logoff" onclick="logoff()" >Log off</a></li>
+            </ul>
+        </nav>
+        <div id="container" style="display:flex;width:100%;align-items: center;justify-content: left;margin:2rem;">
+            <button type="button" class="btn btn-default pull-right" id="send" v-on:click="sendin_c">Siųsti</button>
+
+        </div>
+        <script>
+            function  logoff() {
+                document.cookie = "login=-1; expires=Thu, 18 Dec 2013 12:00:00 UTC; Max-Age=0";
+                document.location.reload;
+            };
+        </script>
+        <script src="vue.js"></script>
+        <script src="app.js"></script>
+        <script src="chart_creation.js"></script>
+    </body>
+</html>
