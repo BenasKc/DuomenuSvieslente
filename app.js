@@ -42,7 +42,7 @@ const app = Vue.createApp({
                     item = JSON.parse(item)
                     this.firstName = item.firstName;
                     this.lastName = item.lastName;
-                    this.email = item.email;
+                    this.email = item.email; 
                 })
             })
             
