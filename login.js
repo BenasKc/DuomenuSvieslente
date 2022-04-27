@@ -23,7 +23,8 @@ const app = Vue.createApp({
     },
     methods:{
         pass:function(event){
-            check_Acc('/checklogin', this.username.replace(/[|]/g, "") +'|'+ this.password.replace(/[|]/g, ""), (item)=>{
+            var items = [this.username.replace(/[|]/g, ""), this.password.replace(/[|]/g, "")];
+            check_Acc('/checklogin',  JSON.stringify(items) , (item)=>{
                 document.location.reload(true);
                 document.cookie = `login=${item};`;
             })

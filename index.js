@@ -1,7 +1,7 @@
 const http = require("http");
 const fs = require("fs");
 const server_link = 'localhost' //"auth-svieslente-test.herokuapp.com";
-var server_port = 8000
+var server_port = 8009
 
 function check_for_login(x, cb){
     if(x.toString().slice(1, -1).length < 1)cb(false)
@@ -16,15 +16,12 @@ function check_for_login(x, cb){
       }
         callback = function(response) {
         response.on('data', function (d) {
-            var item = (d.toString());
-            if(x === item && item != '"-1"')cb(true);
+            if(d.toString()==='true')cb(true);
             else cb(false);
-            
         });
-        
     }
     var logreq = http.request(options, callback);
-    logreq.write(x.toString().slice(1, -1))
+    logreq.write(JSON.stringify(x))
     logreq.end();
 
 }
@@ -84,8 +81,7 @@ function accept(req, res){
                     
                 }
                 var logreq = http.request(options, callback);
-                var itm = (chunk).toString();
-                logreq.write(itm)
+                logreq.write(chunk)
                 logreq.end();
             })
         }
