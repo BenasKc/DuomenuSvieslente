@@ -9,30 +9,30 @@
     </head>
     <body class='container-fluid' id='login' style="justify-content: center; align-items: center;display: flex;height:100vh;background-color: rgb(221, 220, 220);">
         
-        <div class="containter-fluid" style="margin:1vw;width:25vh">
-            <div class="form-group">
+        <div class="containter-fluid">
+            <div class="form-group mb-3">
             <label for="usr">Prisijungimo vardas:</label>
             <input type="text" class="form-control" id="usr" v-model="username">
             </div>
-           <div class="form-group">
+           <div class="form-group mb-3">
             <label for="pwd">El. pa&#353tas:</label>
             <input type="text" class="form-control" id="eml" v-model="email">
            </div>
-           <div class="form-group">
+           <div class="form-group mb-3">
             <label for="eml">Vardas:</label>
             <input type="text" class="form-control" id="nm" v-model="name">
            </div>
-           <div class="form-group">
+           <div class="form-group mb-3">
             <label for="eml">Pavard&#279:</label>
             <input type="text" class="form-control" id="lnm" v-model="lastname">
            </div>
-           <div class="form-group">
+           <div class="form-group mb-3">
             <label for="eml">Slapta&#382odis:</label>
             <input type="password" class="form-control" id="pwd" v-model="password">
            </div>
            
-          <button type="button" class="btn btn-default pull-right" id="loginreq" v-on:click="pass">Registruotis</button>
-          <button class="btn btn-dark" onclick="location.href = '/login'">Prisijungti</button>
+          <button type="button" class="btn btn-dark me-2" id="loginreq" v-on:click="pass">Registruotis</button>
+          <button class="btn" onclick="location.href = '/login'">Prisijungti</button>
         </div> 
         <script src="vue.js"></script>
         <script src="register.js"></script>

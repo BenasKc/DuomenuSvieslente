@@ -210,9 +210,6 @@ function accept(req, res){
             else if(req.url === '/chart_new'){
                 sendFile('chart_new.html', 'text/html', res);
             }
-            else if(req.url === '/profile'){
-                sendFile('profile.html', 'text/html', res);
-            }
             else if(req.url === '/draw.js'){
                 sendFile('draw.js', 'text/javascript', res);
             }
