@@ -29,10 +29,7 @@ function getCookieValue(cb){
 const app = Vue.createApp({
     data(){
         return{
-            firstName: null,
-            lastName: null,
-            email: null,
-            picture: null
+            name_of_org: null
         }
     },
     methods:{
@@ -40,9 +37,7 @@ const app = Vue.createApp({
             getCookieValue((value)=>{
                 fetch_log('/fetch_profile',  value, (item)=>{
                     item = JSON.parse(item)
-                    this.firstName = item.firstName;
-                    this.lastName = item.lastName;
-                    this.email = item.email; 
+                    this.name_of_org = item[0];
                 })
             })
             
@@ -52,6 +47,7 @@ const app = Vue.createApp({
     created(){
         this.$nextTick(function () {
             this.fetch_prof();
+            console.log('bound');
         })
     },
 });

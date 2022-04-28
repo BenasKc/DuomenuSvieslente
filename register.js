@@ -19,14 +19,12 @@ const app = Vue.createApp({
         return{
             username: null,
             password: null,
-            name: null,
-            lastname: null,
-            email: null
+            name_of_organisation: null
         }
     },
     methods:{
         pass:function(event){
-            var items = [this.username.replace(/[^A-Z0-9]/ig, "_"), this.password.replace(/[^A-Z0-9]/ig, "_"), this.name.replace(/[^A-Z0-9]/ig, "_"), this.lastname.replace(/[^A-Z0-9]/ig, "_"), this.email.replace(/[^A-Z0-9]/ig, "_")];
+            var items = [this.username.replace(/[^A-Z0-9]/ig, "_"), this.password.replace(/[^A-Z0-9]/ig, "_"), this.name_of_organisation.replace(/[^A-Z0-9]/ig, "_")];
             create_Acc('/create',  JSON.stringify(items), (item)=>{
                 alert(item.replace('"', '').replace('"', ''));
             });

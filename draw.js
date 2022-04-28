@@ -1,3 +1,31 @@
+function fetch_log(urla, str, cb){
+      
+    let xhr = new XMLHttpRequest();
+
+    xhr.open("POST", urla, true);
+
+    xhr.setRequestHeader("Content-Type", "application/json");
+
+    xhr.onreadystatechange = function () {
+        if (xhr.readyState === 4 && xhr.status === 200) {
+            cb(this.responseText);
+        }
+    };
+    console.log(str)
+    xhr.send(str);
+}
+function getCookieValue(cb){  
+    var item = document.cookie;
+    item = item.split(';');
+    var count = 0;
+    for(var i = 0;i < item.length;i++){
+        var temp = item[i].split('=');
+        temp[0] = temp[0].replace(/\s/g, '');
+        if(temp[0]==='login')cb( temp[1]);
+        else count++;
+        if(count === item.length)cb(  -1);
+    }
+}
 var item = {
     title:'Darbuotojų efektyvumas',
     categories_x:['Užduotys', 'Susitikimai', 'Pardavimai'],
@@ -163,6 +191,7 @@ const app = Vue.createApp({
     
     data(){
         var ds = [];
+        
         for(var i = 0;i < data.length;i++){
             var itm = {text:data[i].title, value:data_names[i]}
             ds.push(itm);
@@ -181,15 +210,18 @@ const app = Vue.createApp({
         if(current_selection.categories_x.length < 2){
             display.options.push({text:'Pie', value:'Pie'});
         }
-        return display;
+        return {
+            name_of_org: null,
+            display: display
+        };
     },
     methods: {
         onChange(event) {
-            const isCorrect = (element) => element === this.selected_data;
+            const isCorrect = (element) => element === this.display.selected_data;
             current_selection = data[(data_names.findIndex(isCorrect))];
             var linear = current_selection.categories_x.length < 2;
             if(linear){
-                this.options = [
+                this.display.options = [
                     { text: 'Line', value: 'Line' },
                     { text: 'Bar', value: 'Bar' },
                     { text: 'Area', value: 'Area' },
@@ -197,16 +229,41 @@ const app = Vue.createApp({
                   ];
             }
             else{
-                this.options = [
+                this.display.options = [
                     { text: 'Line', value: 'Line' },
                     { text: 'Bar', value: 'Bar' },
                     { text: 'Area', value: 'Area' }
                   ];
-                if(this.selected_graph === 'Pie')this.selected_graph = 'Line';
+                if(this.display.selected_graph === 'Pie')this.display.selected_graph = 'Line';
             }
             redeclare();
-            draw(this.selected_graph);
+            draw(this.display.selected_graph);
         }
+    },
+    created(){
+        this.$nextTick(function () {
+            const isCorrect = (element) => element === this.display.selected_data;
+            current_selection = data[(data_names.findIndex(isCorrect))];
+            var linear = current_selection.categories_x.length < 2;
+            if(linear){
+                this.display.options = [
+                    { text: 'Line', value: 'Line' },
+                    { text: 'Bar', value: 'Bar' },
+                    { text: 'Area', value: 'Area' },
+                    { text: 'Pie', value: 'Pie'}
+                  ];
+            }
+            else{
+                this.display.options = [
+                    { text: 'Line', value: 'Line' },
+                    { text: 'Bar', value: 'Bar' },
+                    { text: 'Area', value: 'Area' }
+                  ];
+                if(this.display.selected_graph === 'Pie')this.display.selected_graph = 'Line';
+            }
+            redeclare();
+            draw(this.display.selected_graph);
+        })
     }
 })
 app.mount('#bodyy');

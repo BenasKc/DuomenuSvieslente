@@ -27,8 +27,8 @@
                     <ul class="navbar-nav ms-auto">
                         <li class="nav-item dropdown">
                             <a href="#" class="nav-link dropdown-toggle" id="Profile" role="button" data-bs-toggle="dropdown" aria-expanded="false">Profile</a>
-                            <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="Profile">
-                                <li class="mx-3 text-muted">{{firstName}} {{lastName}}</li>
+                            <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="Profile" id="app">
+                                <li class="mx-3 text-muted">{{name_of_org}} {{lastName}}</li>
                                 <li class="mx-3 fw-light text-muted">{{email}}</li>
                                 <li><hr class="dropdown-divider"></li>
                                 <li><a class="dropdown-item" href="/login" id="logoff" onclick="logoff()">Log Out</a></li>
@@ -44,13 +44,13 @@
                     <div style="padding:1vw;display: block;">
                         <p style="display: inline;">Duomenys: </p>
                         <select  class="form-select" v-model="selected_data" @change="onChange($event)">
-                            <option class="form-select" v-for="data in data_source" v-bind:value="data.value">{{data.text}}</option>
+                            <option class="form-select" v-for="data in display.data_source" v-bind:value="data.value">{{data.text}}</option>
                         </select>
                     </div>
                     <div style="padding:1vw;display: block;">
                         <p style="display: inline;">Brėžimas: </p>
                         <select  class="form-select" v-model="selected_graph" @change="onChange($event)">
-                            <option class="form-select" v-for="option in options" v-bind:value="option.value">{{option.text}}</option>
+                            <option class="form-select" v-for="option in display.options" v-bind:value="option.value">{{option.text}}</option>
                         </select>
                     </div>
                 </div>
