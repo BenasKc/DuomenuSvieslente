@@ -11,7 +11,6 @@ function fetch_log(urla, str, cb){
             cb(this.responseText);
         }
     };
-    console.log(str)
     xhr.send(str);
 }
 function getCookieValue(cb){  
@@ -241,29 +240,26 @@ const app = Vue.createApp({
         }
     },
     created(){
-        this.$nextTick(function () {
-            const isCorrect = (element) => element === this.display.selected_data;
-            current_selection = data[(data_names.findIndex(isCorrect))];
-            var linear = current_selection.categories_x.length < 2;
-            if(linear){
-                this.display.options = [
-                    { text: 'Line', value: 'Line' },
-                    { text: 'Bar', value: 'Bar' },
-                    { text: 'Area', value: 'Area' },
-                    { text: 'Pie', value: 'Pie'}
-                  ];
-            }
-            else{
-                this.display.options = [
-                    { text: 'Line', value: 'Line' },
-                    { text: 'Bar', value: 'Bar' },
-                    { text: 'Area', value: 'Area' }
-                  ];
-                if(this.display.selected_graph === 'Pie')this.display.selected_graph = 'Line';
-            }
-            redeclare();
-            draw(this.display.selected_graph);
-        })
+        const isCorrect = (element) => element === this.display.selected_data;
+        var linear = current_selection.categories_x.length < 2;
+        if(linear){
+            this.display.options = [
+                { text: 'Line', value: 'Line' },
+                { text: 'Bar', value: 'Bar' },
+                { text: 'Area', value: 'Area' },
+                { text: 'Pie', value: 'Pie'}
+              ];
+        }
+        else{
+            this.display.options = [
+                { text: 'Line', value: 'Line' },
+                { text: 'Bar', value: 'Bar' },
+                { text: 'Area', value: 'Area' }
+              ];
+            if(this.selected_graph === 'Pie')this.selected_graph = 'Line';
+        }
+        redeclare();
+        draw(this.selected_graph);
     }
 })
 app.mount('#bodyy');

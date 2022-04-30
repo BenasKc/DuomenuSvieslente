@@ -43,13 +43,13 @@
                 <div style="border-right: solid black 1px;width: 100%;">
                     <div style="padding:1vw;display: block;">
                         <p style="display: inline;">Duomenys: </p>
-                        <select  class="form-select" v-model="selected_data" @change="onChange($event)">
+                        <select  class="form-select" v-model="display.selected_data" @change="onChange($event)">
                             <option class="form-select" v-for="data in display.data_source" v-bind:value="data.value">{{data.text}}</option>
                         </select>
                     </div>
                     <div style="padding:1vw;display: block;">
                         <p style="display: inline;">Brėžimas: </p>
-                        <select  class="form-select" v-model="selected_graph" @change="onChange($event)">
+                        <select  class="form-select" v-model="display.selected_graph" @change="onChange($event)">
                             <option class="form-select" v-for="option in display.options" v-bind:value="option.value">{{option.text}}</option>
                         </select>
                     </div>
