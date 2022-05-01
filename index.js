@@ -86,7 +86,6 @@ function accept(req, res){
             })
         }
         else if(req.url === "/fetch_profile"){
-            var item ;
             req.on('data', chunk => {
                 const options = {
                     hostname: server_link,
@@ -100,7 +99,6 @@ function accept(req, res){
                 callback = function(response) {
                     response.on('data', function (d) {
                         item = (d.toString());
-                        item = JSON.parse(item);
                         res.writeHead(200, {'Content-Type':'text/plain'});
                         res.write(item);
                         res.end();
@@ -131,6 +129,7 @@ function accept(req, res){
                         res.writeHead(200, {'Content-Type':'text/plain'});
                         res.write(item);
                         res.end();
+
                     });
                     
                 }
@@ -175,6 +174,34 @@ function accept(req, res){
                         hostname: server_link,
                         port: server_port,
                         path: '/create_chart',
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'text/plain'
+                        }
+                      }
+                    callback = function(response) {
+                        response.on('data', function (d) {
+                            item = (d.toString());
+                            res.writeHead(200, {'Content-Type':'text/plain'});
+                            res.write(item);
+                            res.end();
+                        });
+                        
+                    }
+                    var logreq = http.request(options, callback);
+                    var itm = (chunk).toString();
+                    logreq.write(itm)
+                    logreq.end();
+                })
+            }
+            else if(req.url === "/fetch_charts"){
+                var item ;
+                
+                req.on('data', chunk => {
+                    const options = {
+                        hostname: server_link,
+                        port: server_port,
+                        path: '/fetch_charts',
                         method: 'POST',
                         headers: {
                             'Content-Type': 'text/plain'

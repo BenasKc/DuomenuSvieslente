@@ -25,46 +25,7 @@ function getCookieValue(cb){
         if(count === item.length)cb(  -1);
     }
 }
-var item = {
-    title:'Darbuotojų efektyvumas',
-    categories_x:['Užduotys', 'Susitikimai', 'Pardavimai'],
-    categories_y:'Darbų atlikta',    
-    series: [{
-        name: 'Jonas',
-        data: [1,0,4]
-    },{
-        name: 'Petras',
-        data: [5,7,3]
-    },{
-        name: 'Marius',
-        data: [3,6,8]
-    },{
-        name: 'Urtė',
-        data: [0,1,3]
-    },{
-        name: 'Vilma',
-        data: [4,12,1]
-    }]
-}
-var item2 = {
-    title:'Atliktos užduotys',
-    categories_x:['Užduotys'],
-    categories_y:'Darbų atlikta',    
-    series: [{
-        name: 'Atliktos užduotys',
-        data: [
-            {name: 'Jonas', y: 1},
-            {name: 'Petras', y: 5},
-            {name: 'Marius', y:3},
-            {name: 'Urtė', y: 0},
-            {name: 'Vilma', y:4}
-        ]
-    }]
-}
-var data = [item, item2];
-
-var current_selection = data[0];
-var data_names = [Object.keys({item})[0], Object.keys({item2})[0]];
+var current_selection = null;
 var carcass_area, carcass_bar, carcass_line, carcass_pie;
 function redeclare(){
     carcass_line = {
@@ -171,7 +132,6 @@ function redeclare(){
         series: current_selection.series
     }
 }
-redeclare();
 function draw(option){
     if(option === 'Line'){
         const chart = Highcharts.chart('chart', carcass_line);
@@ -190,34 +150,29 @@ const app = Vue.createApp({
     
     data(){
         var ds = [];
-        
-        for(var i = 0;i < data.length;i++){
-            var itm = {text:data[i].title, value:data_names[i]}
-            ds.push(itm);
-        }
         var display = {
-            selected_graph: 'Line',
-            selected_data: data_names[0],
-            options: [
-              { text: 'Line', value: 'Line' },
-              { text: 'Bar', value: 'Bar' },
-              { text: 'Area', value: 'Area' }
-            ],
+            selected_graph: null,
+            selected_data: null,
+            options: [],
             data_source: (ds)
             
         }
-        if(current_selection.categories_x.length < 2){
-            display.options.push({text:'Pie', value:'Pie'});
-        }
         return {
             name_of_org: null,
-            display: display
+            usernm: null,
+            display: display,
+            charts: null
         };
     },
     methods: {
         onChange(event) {
             const isCorrect = (element) => element === this.display.selected_data;
-            current_selection = data[(data_names.findIndex(isCorrect))];
+            for(var i = 0;i < this.display.data_source.length; i++){
+                if(this.display.data_source[i].text === this.display.selected_data){
+                    current_selection = JSON.parse(this.charts[i]);
+                    break;
+                }
+            }
             var linear = current_selection.categories_x.length < 2;
             if(linear){
                 this.display.options = [
@@ -235,31 +190,56 @@ const app = Vue.createApp({
                   ];
                 if(this.display.selected_graph === 'Pie')this.display.selected_graph = 'Line';
             }
+
             redeclare();
             draw(this.display.selected_graph);
         }
     },
     created(){
-        const isCorrect = (element) => element === this.display.selected_data;
-        var linear = current_selection.categories_x.length < 2;
-        if(linear){
-            this.display.options = [
-                { text: 'Line', value: 'Line' },
-                { text: 'Bar', value: 'Bar' },
-                { text: 'Area', value: 'Area' },
-                { text: 'Pie', value: 'Pie'}
-              ];
-        }
-        else{
-            this.display.options = [
-                { text: 'Line', value: 'Line' },
-                { text: 'Bar', value: 'Bar' },
-                { text: 'Area', value: 'Area' }
-              ];
-            if(this.selected_graph === 'Pie')this.selected_graph = 'Line';
-        }
-        redeclare();
-        draw(this.selected_graph);
+        getCookieValue((val)=>{
+            fetch_log('/fetch_profile', val, (itm)=>{
+                itm = JSON.parse(itm);
+                this.name_of_org = itm[0];
+                this.usernm = itm[1];
+            })
+            fetch_log('/fetch_charts', val, (itm)=>{
+                var datas = JSON.parse(itm);
+                var data_source_new = [];
+                var charts = [];
+                for(var i = 0;i < datas.length;i++){
+                    data_source_new.push({text:datas[i].Name_of_Chart, value:datas[i].Name_of_Chart});
+                    charts.push(datas[i].Data_blob);
+                }
+                this.display.data_source = data_source_new;
+                this.charts = charts;
+                if(this.display.data_source.length > 0){
+                    this.display.selected_data = this.display.data_source[0].text;
+                }
+                current_selection = JSON.parse(this.charts[0]);
+                this.display.selected_graph = 'Line';
+                var linear = current_selection.categories_x.length < 2;
+                if(linear){
+                    this.display.options = [
+                        { text: 'Line', value: 'Line' },
+                        { text: 'Bar', value: 'Bar' },
+                        { text: 'Area', value: 'Area' },
+                        { text: 'Pie', value: 'Pie'}
+                      ];
+                }
+                else{
+                    this.display.options = [
+                        { text: 'Line', value: 'Line' },
+                        { text: 'Bar', value: 'Bar' },
+                        { text: 'Area', value: 'Area' }
+                      ];
+                    if(this.display.selected_graph === 'Pie')this.display.selected_graph = 'Line';
+                }
+                redeclare();
+                draw(this.display.selected_graph);
+                this.$forceUpdate();
+            })
+        });
+        
     }
 })
 app.mount('#bodyy');
