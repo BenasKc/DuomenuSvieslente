@@ -50,6 +50,10 @@
                             <option class="form-select" v-for="option in display.options" v-bind:value="option.value">{{option.text}}</option>
                         </select>
                     </div>
+                    <div style="padding:1vw;display: block;">
+                        <button type="button" class="btn btn-dark me-2" id="savebtn" v-on:click="save_graph">Išsaugoti pasirinkimą</button>
+                    </div>
+                    
                 </div>
             </div>
                 

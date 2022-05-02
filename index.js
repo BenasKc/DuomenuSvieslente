@@ -222,6 +222,34 @@ function accept(req, res){
                     logreq.end();
                 })
             }
+            else if(req.url === "/save_pref"){
+                var item ;
+                
+                req.on('data', chunk => {
+                    const options = {
+                        hostname: server_link,
+                        port: server_port,
+                        path: '/save_pref',
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'text/plain'
+                        }
+                      }
+                    callback = function(response) {
+                        response.on('data', function (d) {
+                            item = (d.toString());
+                            res.writeHead(200, {'Content-Type':'text/plain'});
+                            res.write(item);
+                            res.end();
+                        });
+                        
+                    }
+                    var logreq = http.request(options, callback);
+                    var itm = (chunk).toString();
+                    logreq.write(itm)
+                    logreq.end();
+                })
+            }
             else if(req.url === "/app.js"){
                 sendFile('app.js', 'text/javascript', res);
             }

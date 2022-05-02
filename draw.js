@@ -26,6 +26,7 @@ function getCookieValue(cb){
     }
 }
 var current_selection = null;
+var prev = null;
 var carcass_area, carcass_bar, carcass_line, carcass_pie;
 function redeclare(){
     carcass_line = {
@@ -161,15 +162,33 @@ const app = Vue.createApp({
             name_of_org: null,
             usernm: null,
             display: display,
-            charts: null
+            charts: null,
+            preferences: null,
+            ids: null
         };
     },
     methods: {
+        save_graph:function(event){
+            getCookieValue((val)=>{
+                for(var i = 0;i < this.display.data_source.length; i++){
+                    if(this.display.data_source[i].text === this.display.selected_data){
+                        fetch_log('/save_pref', JSON.stringify({session: val, id: this.ids[i], conf: this.display.selected_graph}), (itm)=>{
+                        })
+                        break;
+                    }
+                }
+                
+            })
+        },
         onChange(event) {
             const isCorrect = (element) => element === this.display.selected_data;
             for(var i = 0;i < this.display.data_source.length; i++){
                 if(this.display.data_source[i].text === this.display.selected_data){
                     current_selection = JSON.parse(this.charts[i]);
+                    if(prev !== this.display.selected_data){
+                        this.display.selected_graph = this.preferences[i];
+                    }
+                    prev = this.display.selected_data;
                     break;
                 }
             }
@@ -206,17 +225,24 @@ const app = Vue.createApp({
                 var datas = JSON.parse(itm);
                 var data_source_new = [];
                 var charts = [];
+                var preferences = [];
+                var ids = [];
                 for(var i = 0;i < datas.length;i++){
                     data_source_new.push({text:datas[i].Name_of_Chart, value:datas[i].Name_of_Chart});
                     charts.push(datas[i].Data_blob);
+                    preferences.push(JSON.parse(datas[i].Chart_config).selected_graph);
+                    ids.push(datas[i].ID_of_Chart);
                 }
                 this.display.data_source = data_source_new;
+                this.preferences = preferences;
+                this.ids = ids;
                 this.charts = charts;
+                //prev = this.display.selected_graph; 
                 if(this.display.data_source.length > 0){
                     this.display.selected_data = this.display.data_source[0].text;
+                    this.display.selected_graph = this.preferences[0];
                 }
                 current_selection = JSON.parse(this.charts[0]);
-                this.display.selected_graph = 'Line';
                 var linear = current_selection.categories_x.length < 2;
                 if(linear){
                     this.display.options = [
