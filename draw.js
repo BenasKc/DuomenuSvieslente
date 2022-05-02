@@ -173,6 +173,7 @@ const app = Vue.createApp({
                 for(var i = 0;i < this.display.data_source.length; i++){
                     if(this.display.data_source[i].text === this.display.selected_data){
                         fetch_log('/save_pref', JSON.stringify({session: val, id: this.ids[i], conf: this.display.selected_graph}), (itm)=>{
+
                         })
                         break;
                     }
@@ -230,7 +231,11 @@ const app = Vue.createApp({
                 for(var i = 0;i < datas.length;i++){
                     data_source_new.push({text:datas[i].Name_of_Chart, value:datas[i].Name_of_Chart});
                     charts.push(datas[i].Data_blob);
-                    preferences.push(JSON.parse(datas[i].Chart_config).selected_graph);
+                    if(datas[i].Chart_config.length > 0){
+                        preferences.push(JSON.parse(datas[i].Chart_config).selected_graph);
+                    }
+                    else preferences.push('Line');
+
                     ids.push(datas[i].ID_of_Chart);
                 }
                 this.display.data_source = data_source_new;
