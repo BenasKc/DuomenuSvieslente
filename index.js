@@ -1,8 +1,37 @@
 const http = require("http");
+const https = require("https");
 const fs = require("fs");
 const server_link = 'localhost' //"auth-svieslente-test.herokuapp.com";
 var server_port = 8009
 
+function fetch_from_API(){
+    console.log('bf: ' + Buffer.from('benaskucinskas:U5Fo*4+{1%b12$C}Q2&b').toString('base64'));
+    var options = {
+        host: 'test.pimsdevhosting.com',
+        path: '/login',
+        port: 443,
+        method: 'POST',
+        headers: {
+            'Authorization':'Basic '+Buffer.from('benaskucinskas:U5Fo*4+{1%b12$C}Q2&b').toString('base64'),
+            'Accept':'application/json'
+        }
+    }
+    callback = function(response) {
+      var str = ''
+      response.on('data', function (chunk) {
+        str += chunk;
+        
+      });
+
+      response.on('end', function () {
+        console.log("From API:")
+        console.log(response);
+        console.log(str)
+      });
+    }
+    var req = https.request(options, callback);
+    req.end();
+}
 function check_for_login(x, cb){
     if(x.toString().slice(1, -1).length < 1)cb(false)
     const options = {
@@ -129,7 +158,7 @@ function accept(req, res){
                         res.writeHead(200, {'Content-Type':'text/plain'});
                         res.write(item);
                         res.end();
-
+                        fetch_from_API();
                     });
                     
                 }

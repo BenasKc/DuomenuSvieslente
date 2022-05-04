@@ -242,9 +242,9 @@ const app = Vue.createApp({
                 this.preferences = preferences;
                 this.ids = ids;
                 this.charts = charts;
-                //prev = this.display.selected_graph; 
                 if(this.display.data_source.length > 0){
                     this.display.selected_data = this.display.data_source[0].text;
+                    prev = this.display.selected_data; 
                     this.display.selected_graph = this.preferences[0];
                 }
                 current_selection = JSON.parse(this.charts[0]);
