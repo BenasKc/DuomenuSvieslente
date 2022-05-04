@@ -8,7 +8,7 @@ function fetch_from_API(){
     console.log('bf: ' + Buffer.from('benaskucinskas:U5Fo*4+{1%b12$C}Q2&b').toString('base64'));
     var options = {
         host: 'test.pimsdevhosting.com',
-        path: '/login',
+        path: '/api/data',
         port: 443,
         method: 'POST',
         headers: {
@@ -25,11 +25,18 @@ function fetch_from_API(){
 
       response.on('end', function () {
         console.log("From API:")
-        console.log(response);
+        console.log(response.headers);
         console.log(str)
       });
     }
     var req = https.request(options, callback);
+    req.write(`operation": "execute",
+   "resourceName": "astp_CostMgmt_Pivot_DevelopmentStatistics",
+   "timeout": optionalValue,
+   "excludeFieldNames": false,
+    "ProductNamespaces": "DCS, CostMgmt, AF, CMS",
+    "DateFrom": "2021-01-01",
+    "DateTo": "2022-01-01",`);
     req.end();
 }
 function check_for_login(x, cb){
