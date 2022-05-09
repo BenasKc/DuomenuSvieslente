@@ -164,7 +164,10 @@ const app = Vue.createApp({
             display: display,
             charts: null,
             preferences: null,
-            ids: null
+            ids: null,
+            namespace: null,
+            date_from: null,
+            date_to: null
         };
     },
     methods: {
@@ -181,6 +184,15 @@ const app = Vue.createApp({
                 
             })
         },
+        import_data:function(event){
+            getCookieValue((val)=>{
+                fetch_log('/import_charts', JSON.stringify({session: val, namespace: this.namespace, date_from: this.date_from, date_to: this.date_to }), (itm)=>{
+
+                })
+                
+            })
+        },
+        
         onChange(event) {
             const isCorrect = (element) => element === this.display.selected_data;
             for(var i = 0;i < this.display.data_source.length; i++){
