@@ -1,89 +1,89 @@
 <!DOCTYPE html>
 <html lang='en'>
-    <head>
-        <meta charset="utf-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
-        <script src="jquery.min.js"></script>
-        <script src="bootstrap.min.js"></script>
-        <link rel="stylesheet" href="bootstrap.min.css">
-        <title>Pradžia</title>
-    </head>
-    <body id="bodyy">
-        <nav class="navbar navbar-expand-lg navbar-light bg-light">
-            <div class="container-fluid">
-                <a class="navbar-brand" href="/index">Duomen&#371 &#353vieslent&#279</a>
-                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
-                <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                    <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-                        <li class="nav-item">
-                            <a class="nav-link active" aria-current="page" href="/index">Data</a>
-                        </li>
-                    </ul>
-                    <ul class="navbar-nav ms-auto">
-                        <li class="nav-item dropdown">
-                            <a href="#" class="nav-link dropdown-toggle" id="Profile" role="button" data-bs-toggle="dropdown" aria-expanded="false">Profile</a>
-                            <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="Profile" id="app">
-                                <li class="mx-3 text-muted">{{name_of_org}}</li>
-                                <li class="mx-3 fw-light text-muted">{{usernm}}</li>
-                                <li><hr class="dropdown-divider"></li>
-                                <li><a class="dropdown-item" href="/login" id="logoff" onclick="logoff()">Log Out</a></li>
-                            </ul>
-                        </li>
-                    </ul>
-              </div>
-            </div>
-          </nav>
-        <div id="container" style="display:flex;width:100%; height: 80vh;">
-            <div style="flex-grow: 1;display:flex;justify-content: center;">
-                <div style="border-right: solid black 1px;width: 100%;">
-                    <div style="padding:1vw;display: block;">
-                        <p style="display: inline;">Duomenys: </p>
-                        <select  class="form-select" v-model="display.selected_data" @change="onChange($event)">
-                            <option class="form-select" v-for="data in display.data_source" v-bind:value="data.value">{{data.text}}</option>
-                        </select>
-                    </div>
-                    <div style="padding:1vw;display: block;">
-                        <p style="display: inline;">Brėžimas: </p>
-                        <select  class="form-select" v-model="display.selected_graph" @change="onChange($event)">
-                            <option class="form-select" v-for="option in display.options" v-bind:value="option.value">{{option.text}}</option>
-                        </select>
-                    </div>
-                    <div style="padding:1vw;display: block;">
-                        <button type="button" class="btn btn-dark me-2" id="savebtn" v-on:click="save_graph">Išsaugoti pasirinkimą</button>
-                    </div>
-                    <div class="form-group mb-3" style="padding:1vw;display: block;">
-                        <label for="namespace" class="form-label">Domenas (Namespace):</label>
-                        <input type="text" class="form-control" id="namespace" v-model="namespace">
-                    </div>
-                    <div class="form-group mb-3" style="padding:1vw;display: block;">
-                        <label for="date_from" class="form-label">Nuo:</label>
-                        <input type="date" class="form-control" id="date_from" v-model="date_from">
-                    </div>
-                    <div class="form-group mb-3" style="padding:1vw;display: block;">
-                        <label for="date_to" class="form-label">Iki:</label>
-                        <input type="date" class="form-control" id="date_to" v-model="date_to">
-                    </div>
-                    <div style="padding:1vw;display: block;">
-                        <button type="button" class="btn btn-dark me-2" id="importbtn" v-on:click="import_data">Importuoti duomenis</button>
-                    </div>
-                    
-                </div>
-            </div>
-                
-            <div id="chartcont" style="flex-grow: 5;height: 100%;" >
-                <div  id="chart" style='height: 100%;'></div>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <script src="jquery.min.js"></script>
+    <script src="bootstrap.min.js"></script>
+    <link rel="stylesheet" href="bootstrap.min.css">
+    <title>Pradžia</title>
+</head>
+<body id="bodyy">
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="/index">Duomen&#371 &#353vieslent&#279</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                    <li class="nav-item">
+                        <a class="nav-link active" aria-current="page" href="/index">Data</a>
+                    </li>
+                </ul>
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item dropdown">
+                        <a href="#" class="nav-link dropdown-toggle" id="Profile" role="button" data-bs-toggle="dropdown" aria-expanded="false">Profile</a>
+                        <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="Profile" id="app">
+                            <li class="mx-3 text-muted">{{name_of_org}}</li>
+                            <li class="mx-3 fw-light text-muted">{{usernm}}</li>
+                            <li><hr class="dropdown-divider"></li>
+                            <li><a class="dropdown-item" href="/login" id="logoff" onclick="logoff()">Log Out</a></li>
+                        </ul>
+                    </li>
+                </ul>
             </div>
         </div>
-        <script>
-            function  logoff() {
-                document.cookie = "login=-1; expires=Thu, 18 Dec 2013 12:00:00 UTC; Max-Age=0";
-                document.location.reload;
-            };
-        </script>
-        <script src="highcharts.js"></script>
-        <script src="vue.js"></script>
-        <script src="draw.js"></script>
-    </body>
+    </nav>
+    <div id="container" style="display:flex;width:100%; height: 80vh;">
+        <div style="flex-grow: 1;display:flex;justify-content: center;">
+            <div style="border-right: solid black 1px;width: 100%;">
+                <div style="padding:1vw;display: block;">
+                    <p style="display: inline;">Duomenys: </p>
+                    <select  class="form-select" v-model="display.selected_data" @change="onChange($event)">
+                        <option class="form-select" v-for="data in display.data_source" v-bind:value="data.value">{{data.text}}</option>
+                    </select>
+                </div>
+                <div style="padding:1vw;display: block;">
+                    <p style="display: inline;">Brėžimas: </p>
+                    <select  class="form-select" v-model="display.selected_graph" @change="onChange($event)">
+                        <option class="form-select" v-for="option in display.options" v-bind:value="option.value">{{option.text}}</option>
+                    </select>
+                </div>
+                <div style="padding:1vw;display: block;">
+                    <button type="button" class="btn btn-dark me-2" id="savebtn" v-on:click="save_graph">Išsaugoti pasirinkimą</button>
+                </div>
+                <div class="form-group mb-3" style="padding:1vw;display: block;">
+                    <label for="namespace" class="form-label">Domenas (Namespace):</label>
+                    <input type="text" class="form-control" id="namespace" v-model="namespace">
+                </div>
+                <div class="form-group mb-3" style="padding:1vw;display: block;">
+                    <label for="date_from" class="form-label">Nuo:</label>
+                    <input type="date" class="form-control" id="date_from" v-model="date_from">
+                </div>
+                <div class="form-group mb-3" style="padding:1vw;display: block;">
+                    <label for="date_to" class="form-label">Iki:</label>
+                    <input type="date" class="form-control" id="date_to" v-model="date_to">
+                </div>
+                <div style="padding:1vw;display: block;">
+                    <button type="button" class="btn btn-dark me-2" id="importbtn" v-on:click="import_data">Importuoti duomenis</button>
+                </div>
+                
+            </div>
+        </div>
+        
+        <div id="chartcont" style="flex-grow: 5;height: 100%;" >
+            <div  id="chart" style='height: 100%;min-width: 300px;'></div>
+        </div>
+    </div>
+    <script>
+        function  logoff() {
+            document.cookie = "login=-1; expires=Thu, 18 Dec 2013 12:00:00 UTC; Max-Age=0";
+            document.location.reload;
+        };
+    </script>
+    <script src="highcharts.js"></script>
+    <script src="vue.js"></script>
+    <script src="draw.js"></script>
+</body>
 </html>

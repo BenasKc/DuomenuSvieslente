@@ -1,11 +1,7 @@
 function fetch_log(urla, str, cb){
-      
     let xhr = new XMLHttpRequest();
-
     xhr.open("POST", urla, true);
-
     xhr.setRequestHeader("Content-Type", "application/json");
-
     xhr.onreadystatechange = function () {
         if (xhr.readyState === 4 && xhr.status === 200) {
             cb(this.responseText);
@@ -38,17 +34,14 @@ function redeclare(){
                 text: current_selection.categories_y
             }
         },
-    
         xAxis: {
             categories: current_selection.categories_x
         },
-    
         legend: {
             layout: 'vertical',
             align: 'right',
             verticalAlign: 'middle'
         },
-    
         plotOptions: {
             series: {
                 label: {
@@ -88,50 +81,50 @@ function redeclare(){
         series: current_selection.series
     };
     carcass_bar = {
-          chart: {
-            type: 'column'
-          },
-          title: {
-            text: current_selection.title
-          },
-          yAxis: {
-            title: {
-              text: current_selection.categories_y
-            }
-          },
-          xAxis:{
-              categories: current_selection.categories_x
-          },
-          plotOptions: {
-            column: {
-                pointPadding: 0.2,
-                borderWidth: 0
-            }
-        },
-        series: current_selection.series
-    }
-    carcass_pie = {
-        chart: {
-            plotBackgroundColor: null,
-            plotBorderWidth: null,
-            plotShadow: false,
-            type: 'pie'
-        },
+      chart: {
+        type: 'column'
+    },
+    title: {
+        text: current_selection.title
+    },
+    yAxis: {
         title: {
-            text: current_selection.title
-        },
-        plotOptions: {
-            pie: {
-                allowPointSelect: true,
-                cursor: 'pointer',
-                dataLabels: {
-                    enabled: true,
-                    format: '<b>{point.name}</b>'
-                }
-            }
-        },
-        series: current_selection.series
+          text: current_selection.categories_y
+      }
+  },
+  xAxis:{
+      categories: current_selection.categories_x
+  },
+  plotOptions: {
+    column: {
+        pointPadding: 0.2,
+        borderWidth: 0
     }
+},
+series: current_selection.series
+}
+carcass_pie = {
+    chart: {
+        plotBackgroundColor: null,
+        plotBorderWidth: null,
+        plotShadow: false,
+        type: 'pie'
+    },
+    title: {
+        text: current_selection.title
+    },
+    plotOptions: {
+        pie: {
+            allowPointSelect: true,
+            cursor: 'pointer',
+            dataLabels: {
+                enabled: true,
+                format: '<b>{point.name}</b>'
+            }
+        }
+    },
+    series: current_selection.series
+}
 }
 function draw(option){
     if(option === 'Line'){
@@ -148,15 +141,13 @@ function draw(option){
     }
 }
 const app = Vue.createApp({
-    
     data(){
         var ds = [];
         var display = {
             selected_graph: null,
             selected_data: null,
             options: [],
-            data_source: (ds)
-            
+            data_source: (ds)   
         }
         return {
             name_of_org: null,
@@ -176,7 +167,7 @@ const app = Vue.createApp({
                 for(var i = 0;i < this.display.data_source.length; i++){
                     if(this.display.data_source[i].text === this.display.selected_data){
                         fetch_log('/save_pref', JSON.stringify({session: val, id: this.ids[i], conf: this.display.selected_graph}), (itm)=>{
-
+                            alert('Done!');
                         })
                         break;
                     }
@@ -187,12 +178,10 @@ const app = Vue.createApp({
         import_data:function(event){
             getCookieValue((val)=>{
                 fetch_log('/import_charts', JSON.stringify({session: val, namespace: this.namespace, date_from: this.date_from, date_to: this.date_to }), (itm)=>{
-
+                    alert('Done!');
                 })
-                
             })
         },
-        
         onChange(event) {
             const isCorrect = (element) => element === this.display.selected_data;
             for(var i = 0;i < this.display.data_source.length; i++){
@@ -208,21 +197,20 @@ const app = Vue.createApp({
             var linear = current_selection.categories_x.length < 2;
             if(linear){
                 this.display.options = [
-                    { text: 'Line', value: 'Line' },
-                    { text: 'Bar', value: 'Bar' },
-                    { text: 'Area', value: 'Area' },
-                    { text: 'Pie', value: 'Pie'}
-                  ];
+                { text: 'Line', value: 'Line' },
+                { text: 'Bar', value: 'Bar' },
+                { text: 'Area', value: 'Area' },
+                { text: 'Pie', value: 'Pie'}
+                ];
             }
             else{
                 this.display.options = [
-                    { text: 'Line', value: 'Line' },
-                    { text: 'Bar', value: 'Bar' },
-                    { text: 'Area', value: 'Area' }
-                  ];
+                { text: 'Line', value: 'Line' },
+                { text: 'Bar', value: 'Bar' },
+                { text: 'Area', value: 'Area' }
+                ];
                 if(this.display.selected_graph === 'Pie')this.display.selected_graph = 'Line';
             }
-
             redeclare();
             draw(this.display.selected_graph);
         }
@@ -263,18 +251,18 @@ const app = Vue.createApp({
                 var linear = current_selection.categories_x.length < 2;
                 if(linear){
                     this.display.options = [
-                        { text: 'Line', value: 'Line' },
-                        { text: 'Bar', value: 'Bar' },
-                        { text: 'Area', value: 'Area' },
-                        { text: 'Pie', value: 'Pie'}
-                      ];
+                    { text: 'Line', value: 'Line' },
+                    { text: 'Bar', value: 'Bar' },
+                    { text: 'Area', value: 'Area' },
+                    { text: 'Pie', value: 'Pie'}
+                    ];
                 }
                 else{
                     this.display.options = [
-                        { text: 'Line', value: 'Line' },
-                        { text: 'Bar', value: 'Bar' },
-                        { text: 'Area', value: 'Area' }
-                      ];
+                    { text: 'Line', value: 'Line' },
+                    { text: 'Bar', value: 'Bar' },
+                    { text: 'Area', value: 'Area' }
+                    ];
                     if(this.display.selected_graph === 'Pie')this.display.selected_graph = 'Line';
                 }
                 redeclare();
@@ -282,7 +270,6 @@ const app = Vue.createApp({
                 this.$forceUpdate();
             })
         });
-        
     }
 })
 app.mount('#bodyy');

@@ -1,33 +1,31 @@
 <!DOCTYPE html>
 <html>
-    <head>
-        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-        <script src="jquery.min.js"></script>  
-        <script src="bootstrap.min.js"></script>   
-        <link rel="stylesheet" href="bootstrap.min.css">
-        <meta charset="utf-8"/>
-        <title>Registracija</title>
-    </head>
-    <body class='container-fluid' id='login' style="justify-content: center; align-items: center;display: flex;height:100vh;background-color: rgb(221, 220, 220);">
-        
-        <div class="containter-fluid">
-            <div class="form-group mb-3">
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <script src="jquery.min.js"></script>  
+    <script src="bootstrap.min.js"></script>   
+    <link rel="stylesheet" href="bootstrap.min.css">
+    <meta charset="utf-8"/>
+    <title>Registracija</title>
+</head>
+<body class='container-fluid' id='login' style="justify-content: center; align-items: center;display: flex;height:100vh;background-color: rgb(221, 220, 220);">
+    <div class="containter-fluid">
+        <div class="form-group mb-3">
             <label for="usr">Prisijungimo vardas:</label>
             <input type="text" class="form-control" id="usr" v-model="username">
-            </div>
-           <div class="form-group mb-3">
+        </div>
+        <div class="form-group mb-3">
             <label for="eml">Organizacijos pavadinimas:</label>
             <input type="text" class="form-control" id="nm" v-model="name_of_organisation">
-           </div>
-           <div class="form-group mb-3">
+        </div>
+        <div class="form-group mb-3">
             <label for="eml">Slapta&#382odis:</label>
             <input type="password" class="form-control" id="pwd" v-model="password">
-           </div>
-           
-          <button type="button" class="btn btn-dark me-2" id="loginreq" v-on:click="pass">Registruotis</button>
-          <button class="btn" onclick="location.href = '/login'">Prisijungti</button>
-        </div> 
-        <script src="vue.js"></script>
-        <script src="register.js"></script>
-    </body>
+        </div>
+        <button type="button" class="btn btn-dark me-2" id="loginreq" v-on:click="pass">Registruotis</button>
+        <button class="btn" onclick="location.href = '/login'">Prisijungti</button>
+    </div> 
+    <script src="vue.js"></script>
+    <script src="register.js"></script>
+</body>
 </html>
